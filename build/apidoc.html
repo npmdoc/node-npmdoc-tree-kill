@@ -1,0 +1,217 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/pkrumins/node-tree-kill"
+
+    >tree-kill (v1.1.0)</a>
+</h1>
+<h4>kill trees of processes</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.tree-kill">module tree-kill</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.tree-kill.tree-kill">
+            function <span class="apidocSignatureSpan"></span>tree-kill
+            <span class="apidocSignatureSpan">(pid, signal, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.tree-kill.toString">
+            function <span class="apidocSignatureSpan">tree-kill.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.tree-kill.toString">module tree-kill.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.tree-kill.toString.toString">
+            function <span class="apidocSignatureSpan">tree-kill.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.tree-kill" id="apidoc.module.tree-kill">module tree-kill</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.tree-kill.tree-kill" id="apidoc.element.tree-kill.tree-kill">
+        function <span class="apidocSignatureSpan"></span>tree-kill
+        <span class="apidocSignatureSpan">(pid, signal, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">tree-kill = function (pid, signal, callback) {
+    var tree = {};
+    var pidsToProcess = {};
+    tree[pid] = [];
+    pidsToProcess[pid] = 1;
+
+    switch (process.platform) {
+    case &#x27;win32&#x27;:
+        exec(&#x27;taskkill /pid &#x27; + pid + &#x27; /T /F&#x27;, callback);
+        break;
+    case &#x27;darwin&#x27;:
+        buildProcessTree(pid, tree, pidsToProcess, function (parentPid) {
+          return spawn(&#x27;pgrep&#x27;, [&#x27;-P&#x27;, parentPid]);
+        }, function () {
+            killAll(tree, signal, callback);
+        });
+        break;
+    // case &#x27;sunos&#x27;:
+    //     buildProcessTreeSunOS(pid, tree, pidsToProcess, function () {
+    //         killAll(tree, signal, callback);
+    //     });
+    //     break;
+    default: // Linux
+        buildProcessTree(pid, tree, pidsToProcess, function (parentPid) {
+          return spawn(&#x27;ps&#x27;, [&#x27;-o&#x27;, &#x27;pid&#x27;, &#x27;--no-headers&#x27;, &#x27;--ppid&#x27;, parentPid]);
+        }, function () {
+            killAll(tree, signal, callback);
+        });
+        break;
+    }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.tree-kill.toString" id="apidoc.element.tree-kill.toString">
+        function <span class="apidocSignatureSpan">tree-kill.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    }
+}
+
+function buildProcessTree (parentPid, tree, pidsToProcess, spawnChildProcessesList, cb) {
+    var ps = spawnChildProcessesList(parentPid);
+    var allData = &#x27;&#x27;;
+    ps.stdout.on(&#x27;data&#x27;, function (data) {
+var data = data.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;ascii&#x27;);
+allData += data;
+    });
+
+    var onClose = function (code) {
+delete pidsToProcess[parentPid];
+
+if (code != 0) {
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.tree-kill.toString" id="apidoc.module.tree-kill.toString">module tree-kill.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.tree-kill.toString.toString" id="apidoc.element.tree-kill.toString.toString">
+        function <span class="apidocSignatureSpan">tree-kill.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    }
+}
+
+function buildProcessTree (parentPid, tree, pidsToProcess, spawnChildProcessesList, cb) {
+    var ps = spawnChildProcessesList(parentPid);
+    var allData = &#x27;&#x27;;
+    ps.stdout.on(&#x27;data&#x27;, function (data) {
+var data = data.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;ascii&#x27;);
+allData += data;
+    });
+
+    var onClose = function (code) {
+delete pidsToProcess[parentPid];
+
+if (code != 0) {
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
