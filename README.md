@@ -1,4 +1,7 @@
-# api documentation for  [tree-kill (v1.1.0)](https://github.com/pkrumins/node-tree-kill)  [![npm package](https://img.shields.io/npm/v/npmdoc-tree-kill.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-tree-kill) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-tree-kill.svg)](https://travis-ci.org/npmdoc/node-npmdoc-tree-kill)
+# npmdoc-tree-kill
+
+#### basic api documentation for  [tree-kill (v1.1.0)](https://github.com/pkrumins/node-tree-kill)  [![npm package](https://img.shields.io/npm/v/npmdoc-tree-kill.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-tree-kill) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-tree-kill.svg)](https://travis-ci.org/npmdoc/node-npmdoc-tree-kill)
+
 #### kill trees of processes
 
 [![NPM](https://nodei.co/npm/tree-kill.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/tree-kill)
